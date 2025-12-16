@@ -1,0 +1,115 @@
+﻿@model Human_resource_management_System.Models.NhanVien
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Areas/Employee/Views/Shared/_LayoutEmployee.cshtml";
+    var greetingName = Model != null ? Model.hoTen : User.Identity.Name;
+}
+
+<div class="space-y-6">
+    <!-- Phần chào mừng -->
+    <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl shadow-lg p-6 sm:p-10 text-white relative overflow-hidden">
+        <div class="relative z-10">
+            <h1 class="text-3xl font-bold mb-2">Xin chào, @greetingName! 👋</h1>
+            <p class="text-blue-100 text-lg max-w-2xl">
+                Chào mừng bạn quay trở lại hệ thống. Chúc bạn một ngày làm việc hiệu quả và tràn đầy năng lượng.
+            </p>
+        </div>
+        <!-- Hình trang trí -->
+        <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-white opacity-10 blur-2xl"></div>
+        <div class="absolute bottom-0 right-20 w-40 h-40 rounded-full bg-blue-400 opacity-20 blur-xl"></div>
+    </div>
+
+    <!-- Thống kê nhanh / Phím tắt -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Thẻ hồ sơ -->
+        <a href="@Url.Action("Info", "HomeEmployee")" 
+           class="group bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+            <div class="flex items-start justify-between">
+                <div>
+                    <h3 class="font-semibold text-gray-800 text-lg group-hover:text-blue-600 transition-colors">Thông tin cá nhân</h3>
+                    <p class="text-gray-500 text-sm mt-1">Xem và cập nhật hồ sơ của bạn</p>
+                </div>
+                <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                    <i class="fa-regular fa-id-card"></i>
+                </div>
+            </div>
+        </a>
+
+        <!-- Thẻ lịch làm việc -->
+        <a href="@Url.Action("Schedule", "HomeEmployee")" 
+           class="group bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+            <div class="flex items-start justify-between">
+                <div>
+                    <h3 class="font-semibold text-gray-800 text-lg group-hover:text-purple-600 transition-colors">Lịch làm việc</h3>
+                    <p class="text-gray-500 text-sm mt-1">Kiểm tra ca làm và chấm công</p>
+                </div>
+                <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                    <i class="fa-regular fa-calendar-check"></i>
+                </div>
+            </div>
+        </a>
+
+        <!-- Thẻ bảng lương -->
+        <a href="@Url.Action("Salary", "HomeEmployee")" 
+           class="group bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+            <div class="flex items-start justify-between">
+                <div>
+                    <h3 class="font-semibold text-gray-800 text-lg group-hover:text-green-600 transition-colors">Bảng lương</h3>
+                    <p class="text-gray-500 text-sm mt-1">Chi tiết thu nhập và phụ cấp</p>
+                </div>
+                <div class="w-12 h-12 bg-green-50 text-green-600 rounded-lg flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-money-bill-wave"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!-- Khu vực nội dung bổ sung (ví dụ: Thông báo hoặc Tổng quan nhanh) -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Cột trái: Thông báo / Tin tức (Placeholder) -->
+        <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <h3 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-bullhorn text-orange-500"></i>
+                Thông báo nội bộ
+            </h3>
+            <div class="space-y-4">
+                <div class="border-l-4 border-blue-500 bg-blue-50 p-4 rounded-r">
+                    <p class="text-sm font-semibold text-gray-800">Chào mừng hệ thống mới</p>
+                    <p class="text-sm text-gray-600 mt-1">Hệ thống quản lý nhân sự đã được nâng cấp. Vui lòng kiểm tra thông tin cá nhân.</p>
+                    <span class="text-xs text-gray-400 mt-2 block">@DateTime.Now.ToString("dd/MM/yyyy")</span>
+                </div>
+                <!-- Các placeholder khác có thể đặt ở đây -->
+                <div class="p-4 rounded border border-gray-100 bg-gray-50 text-center text-gray-500 text-sm">
+                    Không có thông báo mới nào khác.
+                </div>
+            </div>
+        </div>
+
+        <!-- Cột phải: Trạng thái / Tóm tắt -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <h3 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-chart-pie text-indigo-500"></i>
+                Trạng thái hôm nay
+            </h3>
+            
+            <div class="space-y-4">
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <span class="text-sm text-gray-600">Ngày</span>
+                    <span class="text-sm font-semibold text-gray-800">@DateTime.Now.ToString("dd/MM/yyyy")</span>
+                </div>
+                
+                @if (Model != null)
+                {
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <span class="text-sm text-gray-600">Chức vụ</span>
+                        <span class="text-sm font-semibold text-gray-800">@(Model.ChucVu?.tenChucVu ?? "--")</span>
+                    </div>
+                     <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <span class="text-sm text-gray-600">Phòng ban</span>
+                        <span class="text-sm font-semibold text-gray-800">@(Model.PhongBan?.tenPhongBan ?? "--")</span>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

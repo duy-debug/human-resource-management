@@ -142,6 +142,8 @@
     <Compile Include="Models\ChamCong.cs" />
     <Compile Include="Models\ChucVu.cs" />
     <Compile Include="Models\DonNghiPhep.cs" />
+    <Compile Include="Models\Form\ChangePassword.cs" />
+    <Compile Include="Models\Form\Login.cs" />
     <Compile Include="Models\HopDongLaoDong.cs" />
     <Compile Include="Models\LichLamViec.cs" />
     <Compile Include="Models\LoaiHopDong.cs" />
@@ -184,6 +186,14 @@
     <Content Include="Areas\Employee\Views\web.config" />
     <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Areas\Employee\Views\Shared\_LayoutEmployee.cshtml" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Index.cshtml" />
+    <Content Include="Areas\Employee\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Employee\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Employee\Views\HomeEmployee\Index.cshtml" />
+    <Content Include="Areas\Employee\Views\HomeEmployee\Info.cshtml" />
+    <Content Include="Areas\Employee\Views\HomeEmployee\ChangePassword.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -209,14 +219,12 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Views\HomeAdmin\" />
     <Folder Include="Areas\Employee\Data\" />
-    <Folder Include="Areas\Employee\Views\HomeEmployee\" />
-    <Folder Include="Views\Account\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

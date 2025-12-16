@@ -1,0 +1,129 @@
+﻿@model Human_resource_management_System.Models.NhanVien
+@{
+    ViewBag.Title = "Thông tin cá nhân";
+    Layout = "~/Areas/Employee/Views/Shared/_LayoutEmployee.cshtml";
+}
+
+<div class="space-y-6">
+    <!-- Thẻ tiêu đề -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+            <!-- Ảnh đại diện -->
+            <div class="relative">
+                <div class="w-32 h-32 rounded-full border-4 border-white shadow-lg overflow-hidden bg-gray-100">
+                    <img src="@(string.IsNullOrEmpty(Model.anhDaiDien) ? "/Content/images/default-avatar.png" : Model.anhDaiDien)" 
+                         alt="@Model.hoTen" 
+                         class="w-full h-full object-cover"
+                         onerror="this.src='https://ui-avatars.com/api/?name=@Url.Encode(Model.hoTen)&background=random&size=128'"/>
+                </div>
+                <div class="absolute bottom-1 right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full" title="Đang hoạt động"></div>
+            </div>
+
+            <!-- Thông tin cơ bản -->
+            <div class="flex-1 text-center sm:text-left">
+                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">@Model.hoTen</h2>
+                        <div class="flex flex-wrap items-center justify-center sm:justify-start gap-3 mt-2 text-sm text-gray-600">
+                            <span class="flex items-center gap-1 bg-blue-50 text-blue-700 px-3 py-1 rounded-full">
+                                <i class="fa-solid fa-id-badge"></i>
+                                @Model.maNhanVien
+                            </span>
+                            <span class="flex items-center gap-1 bg-purple-50 text-purple-700 px-3 py-1 rounded-full">
+                                <i class="fa-solid fa-briefcase"></i>
+                                @(Model.ChucVu != null ? Model.ChucVu.tenChucVu : "Chưa có chức vụ")
+                            </span>
+                            <span class="flex items-center gap-1 bg-green-50 text-green-700 px-3 py-1 rounded-full">
+                                <i class="fa-solid fa-building"></i>
+                                @(Model.PhongBan != null ? Model.PhongBan.tenPhongBan : "Chưa có phòng ban")
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <a href="@Url.Action("ChangePassword", "HomeEmployee")" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors shadow-sm">
+                        <i class="fa-solid fa-key"></i>
+                        Đổi mật khẩu
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Chi tiết cá nhân -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-50 flex items-center justify-between bg-gray-50/50">
+                <h3 class="font-semibold text-gray-800 flex items-center gap-2">
+                    <i class="fa-regular fa-user text-blue-500"></i>
+                    Thông tin cơ bản
+                </h3>
+            </div>
+            <div class="p-6">
+                <div class="space-y-4">
+                    <div class="grid grid-cols-3 gap-4 border-b border-gray-50 pb-3 last:border-0 last:pb-0">
+                        <dt class="text-sm font-medium text-gray-500">Ngày sinh</dt>
+                        <dd class="text-sm text-gray-900 col-span-2 font-medium">@Model.ngaySinh.ToString("dd/MM/yyyy")</dd>
+                    </div>
+                    
+                    <div class="grid grid-cols-3 gap-4 border-b border-gray-50 pb-3 last:border-0 last:pb-0">
+                        <dt class="text-sm font-medium text-gray-500">Giới tính</dt>
+                        <dd class="text-sm text-gray-900 col-span-2 font-medium">@Model.gioiTinh</dd>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4 border-b border-gray-50 pb-3 last:border-0 last:pb-0">
+                        <dt class="text-sm font-medium text-gray-500">CCCD/CMND</dt>
+                        <dd class="text-sm text-gray-900 col-span-2 font-medium">@Model.cccd</dd>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4 border-b border-gray-50 pb-3 last:border-0 last:pb-0">
+                        <dt class="text-sm font-medium text-gray-500">Địa chỉ</dt>
+                        <dd class="text-sm text-gray-900 col-span-2 font-medium">@(string.IsNullOrEmpty(Model.diaChi) ? "Chưa cập nhật" : Model.diaChi)</dd>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thông tin liên hệ & Công việc -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-50 flex items-center justify-between bg-gray-50/50">
+                <h3 class="font-semibold text-gray-800 flex items-center gap-2">
+                    <i class="fa-solid fa-address-book text-green-500"></i>
+                    Liên hệ & Công việc
+                </h3>
+            </div>
+            <div class="p-6">
+                <div class="space-y-4">
+                    <div class="grid grid-cols-3 gap-4 border-b border-gray-50 pb-3 last:border-0 last:pb-0">
+                        <dt class="text-sm font-medium text-gray-500">Số điện thoại</dt>
+                        <dd class="text-sm text-gray-900 col-span-2 font-medium flex items-center gap-2">
+                            <i class="fa-solid fa-phone text-xs text-gray-400"></i>
+                            @Model.soDienThoai
+                        </dd>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4 border-b border-gray-50 pb-3 last:border-0 last:pb-0">
+                        <dt class="text-sm font-medium text-gray-500">Email</dt>
+                        <dd class="text-sm text-gray-900 col-span-2 font-medium flex items-center gap-2">
+                            <i class="fa-regular fa-envelope text-xs text-gray-400"></i>
+                            @(string.IsNullOrEmpty(Model.email) ? "Chưa cập nhật" : Model.email)
+                        </dd>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4 border-b border-gray-50 pb-3 last:border-0 last:pb-0">
+                        <dt class="text-sm font-medium text-gray-500">Ngày vào làm</dt>
+                        <dd class="text-sm text-gray-900 col-span-2 font-medium">@Model.ngayVaoLam.ToString("dd/MM/yyyy")</dd>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4 border-b border-gray-50 pb-3 last:border-0 last:pb-0">
+                        <dt class="text-sm font-medium text-gray-500">Trạng thái</dt>
+                        <dd class="text-sm col-span-2">
+                            <span class="px-2 py-1 text-xs font-semibold rounded-full @(Model.trangThaiLamViec == "Đang làm việc" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800")">
+                                @Model.trangThaiLamViec
+                            </span>
+                        </dd>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
