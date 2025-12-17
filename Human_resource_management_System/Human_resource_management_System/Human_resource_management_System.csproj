@@ -194,6 +194,8 @@
     <Content Include="Areas\Employee\Views\HomeEmployee\Index.cshtml" />
     <Content Include="Areas\Employee\Views\HomeEmployee\Info.cshtml" />
     <Content Include="Areas\Employee\Views\HomeEmployee\ChangePassword.cshtml" />
+    <Content Include="Areas\Employee\Views\HomeEmployee\Schedule.cshtml" />
+    <Content Include="Areas\Employee\Views\HomeEmployee\Salary.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

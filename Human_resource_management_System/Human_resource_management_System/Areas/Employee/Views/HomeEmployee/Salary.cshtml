@@ -1,0 +1,140 @@
+﻿
+@model IEnumerable<Human_resource_management_System.Models.BangLuong>
+
+@{
+    ViewBag.Title = "Bảng lương";
+    Layout = "~/Areas/Employee/Views/Shared/_LayoutEmployee.cshtml";
+
+    var employeeName = (ViewBag.EmployeeName as string) ?? User.Identity.Name;
+    var employeeId = (ViewBag.EmployeeId as string) ?? "";
+    var showDebug = (HttpContext.Current != null && HttpContext.Current.IsDebuggingEnabled)
+        && string.Equals(Request.QueryString["debug"], "1", StringComparison.Ordinal);
+
+    Func<decimal?, string> formatMoney = amount =>
+    {
+        var value = amount ?? 0m;
+        return string.Format(new System.Globalization.CultureInfo("vi-VN"), "{0:N0} ₫", value);
+    };
+}
+
+<div class="space-y-6">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div>
+                <h2 class="text-xl font-bold text-gray-800">Bảng lương</h2>
+                <p class="text-sm text-gray-500 mt-1">
+                    Nhân viên: <span class="font-semibold text-gray-700">@employeeName</span>
+                    @if (!string.IsNullOrWhiteSpace(employeeId))
+                    {
+                        <span class="text-gray-400">(</span><span class="font-medium text-gray-600">@employeeId</span><span class="text-gray-400">)</span>
+                    }
+                </p>
+            </div>
+            <div class="text-sm text-gray-500">
+                Kỳ lương: <span class="font-semibold text-gray-700">@(Model?.Count() ?? 0)</span>
+            </div>
+        </div>
+
+        @if (showDebug)
+        {
+            <div class="mt-4 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+                <div class="font-semibold mb-1">Debug Salary</div>
+                <div>employeeId: <span class="font-mono">@employeeId</span></div>
+                <div>records: <span class="font-mono">@(Model?.Count() ?? 0)</span></div>
+                <div class="text-xs text-amber-700 mt-2">Ẩn panel này bằng cách bỏ tham số <span class="font-mono">?debug=1</span>.</div>
+            </div>
+        }
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-50 bg-gray-50/50 flex items-center justify-between">
+            <h3 class="font-semibold text-gray-800 flex items-center gap-2">
+                <i class="fa-solid fa-file-invoice-dollar text-green-600"></i>
+                Danh sách bảng lương
+            </h3>
+        </div>
+
+        @if (Model == null || !Model.Any())
+        {
+            <div class="p-6">
+                <div class="p-4 rounded-lg border border-gray-100 bg-gray-50 text-gray-600 text-sm">
+                    Chưa có dữ liệu bảng lương.
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider">Kỳ lương</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider">Lương cơ bản</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider">Thưởng</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider">Tăng ca</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider">Khấu trừ</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider">BHXH</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider">Thuế TNCN</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider">Tổng</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider">Trạng thái</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider">Ngày thanh toán</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-100">
+                        @foreach (var item in Model)
+                        {
+                            var status = string.IsNullOrWhiteSpace(item.trangThai) ? "--" : item.trangThai;
+                            var statusClass = "bg-gray-100 text-gray-700";
+                            if (string.Equals(status, "Đã thanh toán", StringComparison.OrdinalIgnoreCase))
+                            {
+                                statusClass = "bg-green-100 text-green-800";
+                            }
+                            else if (string.Equals(status, "Chưa thanh toán", StringComparison.OrdinalIgnoreCase))
+                            {
+                                statusClass = "bg-amber-100 text-amber-800";
+                            }
+
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-semibold text-gray-800">@item.thang/@item.nam</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 font-medium">@formatMoney(item.luongCoBan)</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">@formatMoney(item.thuongHieuQua)</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">@formatMoney(item.luongTangCa)</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">@formatMoney(item.khauTru)</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">@formatMoney(item.bhxh)</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">@formatMoney(item.thueTNCN)</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-bold text-gray-900">@formatMoney(item.tongLuong)</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold @statusClass">@status</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                    @if (item.ngayThanhToan.HasValue)
+                                    {
+                                        @item.ngayThanhToan.Value.ToString("dd/MM/yyyy")
+                                    }
+                                    else
+                                    {
+                                        @:--
+                                    }
+                                </td>
+                            </tr>
+                            if (!string.IsNullOrWhiteSpace(item.ghiChu))
+                            {
+                                <tr class="bg-gray-50/50">
+                                    <td class="px-6 py-3 text-xs text-gray-500" colspan="10">
+                                        <span class="font-semibold text-gray-600">Ghi chú:</span>
+                                        <span class="text-gray-700">@item.ghiChu</span>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>
+

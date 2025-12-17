@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 using Human_resource_management_System.Models;
 
 namespace Human_resource_management_System.Areas.Employee.Controllers
@@ -72,6 +73,94 @@ namespace Human_resource_management_System.Areas.Employee.Controllers
                 return RedirectToAction("Info");
             }
             return View(model);
+        }
+
+        public ActionResult Schedule()
+        {
+            var username = User.Identity.Name;
+            var account = db.TaiKhoans
+                .Include(t => t.NhanVien)
+                .FirstOrDefault(t => t.tenDangNhap == username);
+
+            if (account == null)
+            {
+                return HttpNotFound("Không tìm thấy tài khoản đăng nhập.");
+            }
+
+            // Prefer foreign key on TaiKhoan to avoid relying on navigation mapping.
+            var employeeId = account.maNhanVien;
+            if (string.IsNullOrWhiteSpace(employeeId))
+            {
+                employeeId = account.NhanVien?.maNhanVien;
+            }
+
+            if (string.IsNullOrWhiteSpace(employeeId))
+            {
+                return HttpNotFound("Tài khoản chưa gắn với mã nhân viên.");
+            }
+
+            var employeeName = account.NhanVien?.hoTen;
+            if (string.IsNullOrWhiteSpace(employeeName))
+            {
+                employeeName = db.NhanViens
+                    .Where(n => n.maNhanVien == employeeId)
+                    .Select(n => n.hoTen)
+                    .FirstOrDefault();
+            }
+
+            var schedules = db.LichLamViecs
+                .Include(l => l.CaLamViec)
+                .Where(l => l.maNhanVien == employeeId)
+                .OrderBy(l => l.ngayLamViec)
+                .ThenBy(l => l.maCa)
+                .ToList();
+
+            ViewBag.EmployeeName = string.IsNullOrWhiteSpace(employeeName) ? employeeId : employeeName;
+            ViewBag.EmployeeId = employeeId;
+            return View(schedules);
+        }
+
+        public ActionResult Salary()
+        {
+            var username = User.Identity.Name;
+            var account = db.TaiKhoans
+                .Include(t => t.NhanVien)
+                .FirstOrDefault(t => t.tenDangNhap == username);
+
+            if (account == null)
+            {
+                return HttpNotFound("Không tìm thấy tài khoản đăng nhập.");
+            }
+
+            var employeeId = account.maNhanVien;
+            if (string.IsNullOrWhiteSpace(employeeId))
+            {
+                employeeId = account.NhanVien?.maNhanVien;
+            }
+
+            if (string.IsNullOrWhiteSpace(employeeId))
+            {
+                return HttpNotFound("Tài khoản chưa gắn với mã nhân viên.");
+            }
+
+            var employeeName = account.NhanVien?.hoTen;
+            if (string.IsNullOrWhiteSpace(employeeName))
+            {
+                employeeName = db.NhanViens
+                    .Where(n => n.maNhanVien == employeeId)
+                    .Select(n => n.hoTen)
+                    .FirstOrDefault();
+            }
+
+            var salaries = db.BangLuongs
+                .Where(b => b.maNhanVien == employeeId)
+                .OrderByDescending(b => b.nam)
+                .ThenByDescending(b => b.thang)
+                .ToList();
+
+            ViewBag.EmployeeName = string.IsNullOrWhiteSpace(employeeName) ? employeeId : employeeName;
+            ViewBag.EmployeeId = employeeId;
+            return View(salaries);
         }
     }
 }
