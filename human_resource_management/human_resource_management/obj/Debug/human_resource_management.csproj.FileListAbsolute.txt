@@ -160,3 +160,7 @@ E:\PTPMHDT\DoAn\hr-management-system\human_resource_management\human_resource_ma
 E:\PTPMHDT\DoAn\hr-management-system\human_resource_management\human_resource_management\obj\Debug\human_re.72F4A363.Up2Date
 E:\PTPMHDT\DoAn\hr-management-system\human_resource_management\human_resource_management\obj\Debug\human_resource_management.dll
 E:\PTPMHDT\DoAn\hr-management-system\human_resource_management\human_resource_management\obj\Debug\human_resource_management.pdb
+D:\NTU\AcademicYear_2025_2026\Semester1\Project_human_resource_management\human_resource_management\human_resource_management\bin\EntityFramework.dll
+D:\NTU\AcademicYear_2025_2026\Semester1\Project_human_resource_management\human_resource_management\human_resource_management\bin\EntityFramework.SqlServer.dll
+D:\NTU\AcademicYear_2025_2026\Semester1\Project_human_resource_management\human_resource_management\human_resource_management\bin\EntityFramework.xml
+D:\NTU\AcademicYear_2025_2026\Semester1\Project_human_resource_management\human_resource_management\human_resource_management\bin\EntityFramework.SqlServer.xml
