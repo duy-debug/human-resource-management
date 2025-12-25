@@ -1,7 +1,7 @@
 ﻿@model human_resource_management.Models.FormModel.NhanVienForm
 
 @{
-    ViewBag.Title = "Thêm nhân viên mới";
+    ViewBag.Title = "Quản lý nhân viên";
     Layout = "~/Areas/HumanResource/Views/Shared/_Layout.cshtml";
 }
 
@@ -245,10 +245,10 @@
 
             <!-- Khu vực Nút bấm thao tác cuối Form -->
             <div class="p-8 bg-gray-50 border-t border-gray-100 flex items-center justify-end gap-4 mt-6">
-                <!-- Nút Xóa trắng toàn bộ Form -->
-                <button type="reset" class="px-6 py-3 text-gray-600 font-bold hover:text-gray-800 transition-colors">
-                    Hủy và xóa nhập liệu
-                </button>
+                <!-- Nút quay lại danh sách -->
+                <a href="@Url.Action("ManagerEmployee", "Home")" class="px-6 py-3 text-gray-600 font-bold hover:text-gray-800 transition-colors cursor-pointer">
+                    Hủy
+                </a>
                 <!-- Nút Gửi Form đi xử lý -->
                 <button type="submit" class="inline-flex items-center gap-2 px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-200 transition-all active:scale-95">
                     <i class="fa-solid fa-floppy-disk"></i> Lưu hồ sơ nhân viên

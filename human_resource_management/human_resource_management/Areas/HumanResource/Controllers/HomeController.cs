@@ -86,18 +86,14 @@ namespace human_resource_management.Areas.HumanResource.Controllers
                             ngayBatDau = form.ngayVaoLam ?? DateTime.Now,
                             trangThai = true // Hợp đồng mặc định có hiệu lực
                         };
-
                         // Gán hợp đồng cho nhân viên (Navigation Property)
                         nhanVien.HopDongs.Add(hopDong);
-
                         // 3. Lưu tất cả vào Database
                         db.NhanViens.Add(nhanVien);
                         db.SaveChanges(); // EF tự xử lý lưu nhanVien trước để lấy ID cho hopDong
-
                         transaction.Commit();
-                        
                         // Thiết lập thông báo thành công
-                        TempData["SuccessMessage"] = "Thêm nhân viên và khởi tạo hợp đồng thành công!";
+                        TempData["SuccessMessage"] = "Thêm nhân viên và khởi tạo hồ sơ thành công!";
                         return RedirectToAction("ManagerEmployee");
                     }
                     catch (Exception ex)
