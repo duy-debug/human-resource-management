@@ -6,9 +6,11 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using human_resource_management.Filters;
 
 namespace human_resource_management.Areas.HumanResource.Controllers
 {
+    [RoleAuthorize("hr")]
     public class HomeController : Controller
     {
         private ModelDBContext db = new ModelDBContext();
